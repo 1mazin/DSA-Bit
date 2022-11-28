@@ -41,8 +41,9 @@ class Solution {
         for(int i=0;i<arr.length;i++)
         {
            int  count=0;
-            for(int j=0;j<arr[0].length;j++)
+            for(int j=m-1;j>=0;j--)
             {
+                if(arr[i][j]==0)break;
                 if(arr[i][j]==1)count++;
             }
             if(count>max)
