@@ -5,10 +5,20 @@ class Solution {
         int res=0;
         HashMap<Integer,Integer> m=new HashMap<>();
         m.put(0,1);
-       
         for(int i=0;i<nums.length;i++)
         {
-            sum+=(nums[i]%2);
+           if(nums[i]%2==0)
+           {
+               nums[i]=0;
+           }
+           else
+           {
+               nums[i]=1;
+           }
+        }
+        for(int i=0;i<nums.length;i++)
+        {
+            sum+=nums[i];
             m.put(sum,m.getOrDefault(sum,0)+1);
             if(m.containsKey(sum-k1))
             {
