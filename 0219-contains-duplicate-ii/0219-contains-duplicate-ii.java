@@ -10,6 +10,7 @@ class Solution {
                {
                    return true;
                }
+               m.put(nums[i],i);
                
                
            }
