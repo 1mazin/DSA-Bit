@@ -2,15 +2,15 @@ class Solution {
     public int[] productExceptSelf(int[] nums) {
         int prod=1;
         int count=0;
-        int index=-1;
-        boolean zero=false;
+        int indexOfZero=-1;
+        boolean isZeroPresent=false;
         int[] res=new int[nums.length];
         for(int i=0;i<nums.length;i++)
         {
             if(nums[i]==0)
             {
-                zero=true;
-                index=i;
+                isZeroPresent=true;
+                indexOfZero=i;
                 count++;
             }
             else
@@ -25,9 +25,9 @@ class Solution {
         }
         for(int i=0;i<nums.length;i++)
         {
-            if(zero)
+            if(isZeroPresent)
             {
-            if(count==1 && i==index)
+            if(count==1 && i==indexOfZero)
             {
                 res[i]=prod;
             }
