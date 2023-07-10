@@ -1,18 +1,23 @@
 class Solution {
     public int singleNumber(int[] nums) {
-        Arrays.sort(nums);
-        int i=0;
-        while(i<=nums.length)
+        int res=0;
+        for(int i=0;i<=31;i++)
         {
-            if( i<=nums.length-2 && nums[i]==nums[i+2] )i+=2;
-            else
+            int cntZero=0;
+            int cntOne=0;
+            int temp=(1<<i); //Mask to find the bit at kth position
+            for(int num:nums)
             {
-               return nums[i];
+                int currbit=temp&num;
+                if(currbit==0)cntZero++;
+                else cntOne++;
             }
-            i++;
-            System.out.println(i);
+            if(cntZero%3==0)
+            {
+                res=(res)|(1<<i);
+            }
         }
-        return -1;
+        return res;
         
     }
 }
