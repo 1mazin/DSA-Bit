@@ -5,16 +5,17 @@ class Solution {
         {
             int cntZero=0;
             int cntOne=0;
-            int temp=(1<<i); //Mask to find the bit at kth position
+            int temp=(1<<i);   //Mask to find the bit at kth position
             for(int num:nums)
             {
                 int currbit=temp&num;
                 if(currbit==0)cntZero++;
                 else cntOne++;
             }
-            if(cntZero%3==0)
+            if(cntOne%3!=0) 
             {
-                res=(res)|(1<<i);
+                
+                res=(res)|(1<<i); 
             }
         }
         return res;
