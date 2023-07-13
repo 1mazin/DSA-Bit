@@ -8,54 +8,66 @@
  * }
  */
 class Solution {
-    HashMap<TreeNode,List<TreeNode>> map = new HashMap<>();
+    HashMap<TreeNode,TreeNode> map = new HashMap<>();
     public List<Integer> distanceK(TreeNode root, TreeNode target, int K) {
-        List<Integer> ans = new ArrayList<>();
-        if(root==null) return ans;
-        if(K==0){
-            ans.add(target.val);
-            return ans;
-        }
         
-        //construct a graph using map representing adjacency list
-        buildGraph(root,null);
-        
-        //do BFS from target
-        HashSet<TreeNode> visited = new HashSet<>();
-        Queue<TreeNode> q = new LinkedList<>();
-        q.offer(target);
-        visited.add(target);
-        while(K>0){
-            K--;
-            int size = q.size();
-            for(int i=0;i<size;i++){
-                TreeNode cur = q.poll();
-                List<TreeNode> cur_list = map.get(cur);
-                for(int j=0;j<cur_list.size();j++){
-                    TreeNode next = cur_list.get(j);
-                    if(!visited.contains(next)){
-                        if(K==0){
-                            ans.add(next.val);
-                        }
-                        visited.add(next);
-                        q.offer(next);
-                    }
-                }                
-            }
-            if(K==0) return ans;
-        }
-        return ans;
+        if(root==null) return new ArrayList();
+        if(K==0)
+        return new ArrayList<>(Collections.singletonList(target.val));
+        buildGraph(root);
+        return bfs(root,target,K);
+       
     }
     
-    public void buildGraph(TreeNode cur,TreeNode pre){
-        if(cur==null) return;
-        if(map.containsKey(cur)) return;
-        map.put(cur,new ArrayList<TreeNode>(){});
-        if(pre!=null){
-            map.get(cur).add(pre);
-            map.get(pre).add(cur);
+    public void buildGraph(TreeNode root){
+        if(root==null) return;
+        if(root.left!=null) {
+            map.put(root.left,root);
+            buildGraph(root.left);
         }
-        buildGraph(cur.left,cur);
-        buildGraph(cur.right,cur);
+        if(root.right!=null) {
+            map.put(root.right,root);
+            buildGraph(root.right);
+        }
+        
+    }
+    public List<Integer> bfs(TreeNode root,TreeNode target,int K)
+    {
+        int[] visited=new int[500];
+        int curLevel=0;
+        List<Integer> ans=new ArrayList<>();
+        Queue<TreeNode> q=new LinkedList<>();
+        q.add(target);
+        visited[target.val]=1;
+        while(q.size()!=0) {
+            int n=q.size();
+            if(curLevel==K) {
+                break;
+            }
+            while(n-->0) {
+                TreeNode temp=q.poll();
+                if(temp.left!=null && visited[temp.left.val]==0) {
+                    q.offer(temp.left);
+                    visited[temp.left.val]=1;
+                }
+                if(temp.right!=null && visited[temp.right.val]==0) {
+                    q.offer(temp.right);
+                    visited[temp.right.val]=1;
+                }
+                 if(map.get(temp)!=null && visited[map.get(temp).val]==0) {
+                    q.offer(map.get(temp));
+                    visited[map.get(temp).val]=1;
+                }
+            }
+           curLevel++; 
+            
+        }
+        while(q.size()!=0)
+        {
+            System.out.println(q.size());
+            ans.add(q.poll().val);
+            
+        }
+        return ans;
     }
 }
