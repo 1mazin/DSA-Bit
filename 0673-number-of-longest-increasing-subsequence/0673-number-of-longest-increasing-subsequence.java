@@ -23,9 +23,8 @@ class Solution {
             }
                  max=Math.max(dp[i],max);
         }
-        System.out.println(max);
         for(int i=0;i<cnt.length;i++) {
-         System.out.println(dp[i]);   
+     
             if(dp[i]==max) ans+=cnt[i];
 
         }
