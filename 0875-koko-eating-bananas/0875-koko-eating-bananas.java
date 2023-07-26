@@ -1,34 +1,31 @@
 class Solution {
-    public boolean check(int mid,int[] piles,int h)
-    {
-        long hour=0;
-        for(int pile:piles)
-        {
-            hour+=(int)Math.ceil((double)pile/(double)mid);
-
-        }
-        if(hour>h)return false;
-        else return true;
-    }
     public int minEatingSpeed(int[] piles, int h) {
-        int max=Integer.MIN_VALUE;
-        for(int i=0;i<piles.length;i++)
-        {
-            max=Math.max(max,piles[i]);
-        }
         int lo=1;
-        int hi=max;
-        while(lo<=hi)
-        {
+        int result=-1;
+        int hi=0;
+        for(int pile :piles) {
+            hi=Math.max(hi,pile);
+        }
+     
+        while(lo<=hi) {
             int mid=lo+(hi-lo)/2;
-            if(check(mid,piles,h))
-            hi=mid-1;
-            else 
-            {
+            if(sol(piles,mid,h)) {
+                result=mid;
+                hi=mid-1;
+            }
+            else {
                 lo=mid+1;
             }
         }
-        return lo;
+        return result;
         
+    }
+    public boolean sol(int[] piles,int mid,int h) {
+        int k=0;
+        for(int i=0;i<piles.length;i++) {
+            k+=Math.ceil((double)piles[i]/mid);
+        }
+        if(k<=h)return true;
+        else return false;
     }
 }
