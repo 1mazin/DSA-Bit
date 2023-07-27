@@ -20,6 +20,6 @@ class Solution {
             else return live[i]+(sum/(long)(i+1));
         
         }
-            return live[n - 1] + sum / n;
+            return ans + sum / n;
     }
 }
