@@ -1,24 +1,19 @@
-class Solution {
-    public int[] calculateCandiesArray(int[] ratings) {
-        int[] arr = new int[ratings.length];
-        Arrays.fill(arr, 1);
-        for(int i = 1 ; i < ratings.length ; i++) {
-            if(ratings[i] > ratings[i-1]) {
-                arr[i] = arr[i-1] + 1;
-            }
-        }
-        return arr;
-    }
+class Solution {   
     public int candy(int[] ratings) {
-        int[] rats = new int[ratings.length];
-        for(int i = ratings.length - 1 ; i >= 0 ; i--) {
-            rats[ratings.length - (i + 1)] = ratings[i];
+        int[] l2r = new int[ratings.length];
+        int[] r2l = new int[ratings.length];
+        Arrays.fill(l2r, 1);
+        Arrays.fill(r2l, 1);
+        for(int i=1;i<ratings.length;i++){
+            if(ratings[i]>ratings[i-1])l2r[i]=l2r[i-1]+1;
         }
-        ratings = calculateCandiesArray(ratings);
-        rats = calculateCandiesArray(rats);
+         for(int i=ratings.length-2;i>=0;i--){
+            if(ratings[i]>ratings[i+1])r2l[i]=r2l[i+1]+1;
+        }
+       
         int sum = 0;
         for(int i = 0 ; i < ratings.length ; i++) {
-            sum += Math.max(ratings[i], rats[ratings.length - (i+1)]);
+            sum += Math.max(l2r[i], r2l[i]);
         }
         return sum;
     }
